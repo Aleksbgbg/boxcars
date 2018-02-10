@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
+  </head>
+  <body>
+    <input type="file" id="input" onchange="handleFiles(this.files)">
+    <script src='./index.js'></script>
+    <script>
+            function handleFiles(files) {
+              for (var i = 0, numFiles = files.length; i < numFiles; i++) {
+                var file = files[i];
+
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                  var z = new Uint8Array(e.target.result);
+                  var a = window.boxcars(z, z.length);
+                  alert(`${a}`)
+                };
+
+                reader.readAsArrayBuffer(file);
+              }
+            }      
+    </script>
+  </body>
+</html>

@@ -37,4 +37,4 @@ harness = false
 phf_codegen = "0.7"
 
 [workspace]
-members = ["rrrocket", "bitter"]
+members = ["rrrocket", "bitter", "boxcars-web"]
