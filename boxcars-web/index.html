@@ -13,11 +13,7 @@
                 var reader = new FileReader();
                 reader.onload = function(e) {
                   var z = new Uint8Array(e.target.result);
-                  var old_len = my_memory.buffer.byteLength;
-                  my_memory.grow((z.length / 65536)  + 1)
-                  var j = new Uint8Array(my_memory.buffer);
-                  j.set(z, old_len)
-                  var a = window.boxcars(old_len, z.length);
+                  var a = window.parse_replay(z);
                   alert(`${a}`)
                 };
 
