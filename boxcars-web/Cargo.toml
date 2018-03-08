@@ -8,4 +8,4 @@ crate-type = ["cdylib"]
 
 [dependencies]
 boxcars = "0.2"
-wasm-bindgen = { git = 'https://github.com/alexcrichton/wasm-bindgen' }
+wasm-bindgen = "0.1"
