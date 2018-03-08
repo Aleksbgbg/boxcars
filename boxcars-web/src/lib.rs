@@ -17,23 +17,23 @@ pub struct WebReplay {
 
 #[wasm_bindgen]
 impl WebReplay {
-	pub fn header_size(&self) -> i32 {
+    pub fn header_size(&self) -> i32 {
         self.header_size
-    }	
+    }
 
-	pub fn header_crc(&self) -> i32 {
+    pub fn header_crc(&self) -> i32 {
         self.header_crc
     }
 
-	pub fn major_version(&self) -> i32 {
+    pub fn major_version(&self) -> i32 {
         self.major_version
     }
 
-	pub fn minor_version(&self) -> i32 {
+    pub fn minor_version(&self) -> i32 {
         self.minor_version
     }
 
-	pub fn game_type(&self) -> String {
+    pub fn game_type(&self) -> String {
         self.game_type.clone()
     }
 }
@@ -52,12 +52,12 @@ impl<'a> From<Replay<'a>> for WebReplay {
 
 #[no_mangle]
 #[wasm_bindgen]
-pub extern fn parse_replay(data: &[u8]) -> WebReplay {
+pub extern "C" fn parse_replay(data: &[u8]) -> WebReplay {
     let parsing = ParserBuilder::new(data)
         .always_check_crc()
         .must_parse_network_data()
         .parse();
-    
+
     match parsing {
         Ok(replay) => WebReplay::from(replay),
         Err(ref e) => WebReplay::default(),
