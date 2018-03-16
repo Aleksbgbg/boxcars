@@ -27,6 +27,16 @@ impl KeyFrame {
     }
 }
 
+impl<'a> From<boxcars::KeyFrame> for KeyFrame {
+    fn from(x: boxcars::KeyFrame<'a>) -> Self {
+        KeyFrame {
+            time: x.time,
+            frame: x.frame,
+            position: x.position,
+        }
+    }
+}
+
 #[wasm_bindgen]
 pub struct Goal {
     frame: i32,
@@ -99,15 +109,7 @@ impl<'a> From<Replay<'a>> for WebReplay {
             major_version: replay.major_version,
             minor_version: replay.minor_version,
             game_type: replay.game_type.to_owned().to_string(),
-            key_frames: replay
-                .keyframes
-                .into_iter()
-                .map(|x| KeyFrame {
-                    time: x.time,
-                    frame: x.frame,
-                    position: x.position,
-                })
-                .collect(),
+            key_frames: replay.keyframes.into_iter().map(KeyFrame::from).collect(),
         }
     }
 }
