@@ -6,6 +6,50 @@ use wasm_bindgen::prelude::*;
 use boxcars::{ParserBuilder, Replay};
 
 #[wasm_bindgen]
+pub struct KeyFrame {
+    time: f32,
+    frame: i32,
+    position: i32,
+}
+
+#[wasm_bindgen]
+impl KeyFrame {
+    pub fn time(&self) -> f32 {
+        self.time
+    }
+
+    pub fn frame(&self) -> i32 {
+        self.frame
+    }
+
+    pub fn position(&self) -> i32 {
+        self.position
+    }
+}
+
+#[wasm_bindgen]
+pub struct Goal {
+    frame: i32,
+    team: String,
+    player: String,
+}
+
+#[wasm_bindgen]
+impl Goal {
+    pub fn frame(&self) -> i32 {
+        self.frame
+    }
+
+    pub fn team(&self) -> String {
+        self.team.clone()
+    }
+
+    pub fn player(&self) -> String {
+        self.player.clone()
+    }
+}
+
+#[wasm_bindgen]
 #[derive(Default)]
 pub struct WebReplay {
     header_size: i32,
@@ -13,6 +57,7 @@ pub struct WebReplay {
     major_version: i32,
     minor_version: i32,
     game_type: String,
+    key_frames: Vec<KeyFrame>,
 }
 
 #[wasm_bindgen]
@@ -36,6 +81,14 @@ impl WebReplay {
     pub fn game_type(&self) -> String {
         self.game_type.clone()
     }
+
+    pub fn goals(&self) -> Vec<Goal> {
+        vec![]
+    }
+
+    pub fn key_frames(&self) -> Vec<KeyFrame> {
+        self.key_frames.clone()
+    }
 }
 
 impl<'a> From<Replay<'a>> for WebReplay {
@@ -46,6 +99,11 @@ impl<'a> From<Replay<'a>> for WebReplay {
             major_version: replay.major_version,
             minor_version: replay.minor_version,
             game_type: replay.game_type.to_owned().to_string(),
+            key_frames: replay.keyframes.into_iter().map(|x| KeyFrame {
+                time: x.time,
+                frame: x.frame,
+                position: x.position,
+            }).collect(),
         }
     }
 }
