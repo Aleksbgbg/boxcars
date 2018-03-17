@@ -27,8 +27,8 @@ impl KeyFrame {
     }
 }
 
-impl<'a> From<boxcars::KeyFrame> for KeyFrame {
-    fn from(x: boxcars::KeyFrame<'a>) -> Self {
+impl From<boxcars::KeyFrame> for KeyFrame {
+    fn from(x: boxcars::KeyFrame) -> Self {
         KeyFrame {
             time: x.time,
             frame: x.frame,
